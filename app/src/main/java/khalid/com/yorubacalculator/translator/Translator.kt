@@ -157,4 +157,8 @@ object Translator {
         val numToArray = no.toString().toCharArray()
         return numToArray[2].toInt()
     }
+    private fun getPrifixForTwoDigitNo(no: Int) : String{
+        val noToArray = no.toString().toCharArray()
+        return translateNumbersOneToNine(noToArray[0].toInt())
+    }
 }
