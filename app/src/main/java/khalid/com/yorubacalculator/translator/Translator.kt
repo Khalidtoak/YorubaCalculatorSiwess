@@ -1,5 +1,6 @@
 package khalid.com.yorubacalculator.translator
 
+import android.util.Log
 /**
  * Created by ${KhalidToak} on 3/6/2019.
  */
@@ -43,29 +44,29 @@ object Translator {
             else -> "Invaid String or number"
         }
     }
-    fun translateRoundedNumbers(operatorOrNo: Int, prefix: String) : String{
+    private fun translate100to2000(operatorOrNo: Int) : String{
         return when(operatorOrNo){
-            in 100..999-> translate100to999(operatorOrNo, prefix)
+            in 100..999-> translate100to999(operatorOrNo)
             1000 -> "ẹgbẹ̀rún"
-            in 1000..1099 -> "ẹgbẹ̀rún ó lé " + translate1000To1099(operatorOrNo, prefix)
+            in 1000..1099 -> "ẹgbẹ̀rún ó lé " + translate1000To1099(operatorOrNo)
             1100 -> "Ẹgbẹrunlelọgọrun"
-            in 1101..1199 -> "ẹgbẹ̀rún ó lé"+ translate100to999(getThelast3digitsOfA4digitNumber(operatorOrNo), prefix)
+            in 1101..1199 -> "ẹgbẹ̀rún ó lé"+ translate100to999(getThelast3digitsOfA4digitNumber(operatorOrNo))
             1200 -> "ẹgbẹ̀fà"
-            in 1201..1299 -> "ẹgbẹ̀fà ó lé"+ translate100to999(getThelast3digitsOfA4digitNumber(operatorOrNo), prefix)
+            in 1201..1299 -> translate4digitNos(operatorOrNo , "ẹgbẹ̀fà ó lé")
             1300 -> "Ẹdẹgbeje"
-            in 1301..1399-> "ẹ̀ẹ̀dẹ́gbèje ó lé" + translate100to999(getThelast3digitsOfA4digitNumber(operatorOrNo), prefix)
+            in 1301..1399->  translate4digitNos(operatorOrNo , "ẹ̀ẹ̀dẹ́gbèje ó lé" )
             1400 -> "egbèje"
-            in 1401..1499 -> "egbèje ó lé" + translate100to999(getThelast3digitsOfA4digitNumber(operatorOrNo), prefix)
+            in 1401..1499 ->  translate4digitNos(operatorOrNo , "egbèje ó lé" )
             1500 -> "ẹ̀ẹ̀dẹ́gbẹ̀jọ"
-            in 1501..1599 -> "ẹ̀ẹ̀dẹ́gbẹ̀jọ ó lé"  + translate100to999(getThelast3digitsOfA4digitNumber(operatorOrNo), prefix)
+            in 1501..1599 -> translate4digitNos(operatorOrNo,"ẹ̀ẹ̀dẹ́gbẹ̀jọ ó lé"  )
             1600 -> "ẹgbẹ̀jọ"
-            in 1601..1699 -> "ẹgbẹ̀jọ ó lé" + translate100to999(getThelast3digitsOfA4digitNumber(operatorOrNo), prefix)
+            in 1601..1699 ->   translate4digitNos(operatorOrNo, "ẹgbẹ̀jọ ó lé")
             1700 -> "Ẹdẹgbẹsan"
-            in 1701..1799 -> "ẹ̀ẹ̀dẹ́gbẹ̀sán ó lé" + translate100to999(getThelast3digitsOfA4digitNumber(operatorOrNo), prefix)
+            in 1701..1799 ->  translate4digitNos(operatorOrNo, "ẹ̀ẹ̀dẹ́gbẹ̀sán ó lé" )
             1800 -> "ẹgbẹ̀sàn"
-            in 1801..1899-> "ẹgbẹ̀sàn ó lé" + translate100to999(getThelast3digitsOfA4digitNumber(operatorOrNo), prefix)
+            in 1801..1899-> translate4digitNos(operatorOrNo, "ẹgbẹ̀sàn ó lé" )
             1900 -> "ẹ̀ẹ̀dẹ́gbàà"
-            in 1901..1999 -> "ẹ̀ẹ̀dẹ́gbàà ó lé" + translate100to999(getThelast3digitsOfA4digitNumber(operatorOrNo), prefix)
+            in 1901..1999 -> translate4digitNos(operatorOrNo,  "ẹ̀ẹ̀dẹ́gbàà ó lé" )
 
             2000 -> "ẹgbẹ̀wá"
             else -> "Invalid number passed"
@@ -81,15 +82,23 @@ object Translator {
        return when(no){
            in 101..109 -> " ọgọ́rún ó lé" + translateNumbersOneToNine(getLastDigitOfA2DigitNo(no))
            120, 140, 160, 180 -> getTranslationFor120To180(no)
-           in 111..119 -> translateSomeComplexOnes(no,"àádọ́fà")
-           in 121..129 -> translateSomeComplexOnes(no, getTranslationFor120To180(120))
-           in 131..139 -> translateSomeComplexOnes(no, "àádóje")
-           in 141..149 -> translateSomeComplexOnes(no, getTranslationFor120To180(140))
-           in 151..159 -> translateSomeComplexOnes(no, "àádọ́jọ")
-           in 161..169 -> translateSomeComplexOnes(no, getTranslationFor120To180(160))
-           in 171..179 -> translateSomeComplexOnes(no, "àádọ́sán")
+           in 111..114 -> translateSomeComplexOnes(no,"àádọ́fà")
+           in 115..119 -> translateSomeComplexOnes(no, getTranslationFor120To180(120))
+           in 121..124 -> translateSomeComplexOnes(no, getTranslationFor120To180(120))
+           in 125..129  -> translateSomeComplexOnes(no, "àádóje")
+           in 131..134 -> translateSomeComplexOnes(no, "àádóje")
+           in 135..139 ->  translateSomeComplexOnes(no, getTranslationFor120To180(140))
+           in 141..144 -> translateSomeComplexOnes(no, getTranslationFor120To180(140))
+           in 144..149 ->  translateSomeComplexOnes(no, "àádọ́jọ")
+           in 151..154 -> translateSomeComplexOnes(no, "àádọ́jọ")
+           in 155..159 -> translateSomeComplexOnes(no, getTranslationFor120To180(160))
+           in 161..164 -> translateSomeComplexOnes(no, getTranslationFor120To180(160))
+           in 165..169 -> translateSomeComplexOnes(no, "àádọ́sán")
+           in 171..174 -> translateSomeComplexOnes(no, "àádọ́sán")
+           in 175..179 -> translateSomeComplexOnes(no, getTranslationFor120To180(180))
            in 181..189 -> translateSomeComplexOnes(no, getTranslationFor120To180(180))
-           in 191..199-> translateSomeComplexOnes(no, "ààdọ́wá")
+           in 191..194-> translateSomeComplexOnes(no, "ààdọ́wá")
+           in 195..199 -> translateSomeComplexOnes(no, "rúgba")
            110 -> "àádọ́fà"
            130 -> "àádóje"
            150 -> "àádọ́jọ"
@@ -98,10 +107,12 @@ object Translator {
            else -> "Invalid number passed"
        }
     }
-    private fun translateNumbersbetweenRounded(no: Int, prefix: String): String{
-        val numToArray = no.toString().toCharArray()
-        return if (numToArray[1].toInt()==0)  translateNumbersOneToNine(no)
-        else translateElevenToNinetyNine(no, prefix)
+    private fun translateNumbersbetweenRounded(no: Int): String{
+        val numToArray = no.toString().map { it.toString().toInt() }.toIntArray()
+        return if (numToArray[1]==0)  translateNumbersOneToNine(numToArray[2])
+        else translateElevenToNinetyNine("${numToArray[1]}${numToArray[2]}".toInt(), getPrifixForTwoDigitNo(
+            (numToArray[1].toDouble() * Math.pow(10.0, Math.log10(numToArray[2].toDouble()) + 1)
+                    + numToArray[2]).toInt()))
     }
     private fun translate10To90(no: Int)  : String{
         return when(no){
@@ -117,48 +128,75 @@ object Translator {
             else -> "Invalid number passed"
         }
     }
-    private fun translate100to999(operatorOrNo: Int, prefix: String) : String{
+    private fun translate100to999(operatorOrNo: Int) : String{
         return when(operatorOrNo){
             100 -> "Ọgọrun"
-            in 101..190 -> translate101To199(operatorOrNo)
+            in 101..199 -> translate101To199(operatorOrNo)
             200 -> "Igba"
-            in 201..299 -> "Igba ó lé "+ translateNumbersbetweenRounded(operatorOrNo, prefix)
+            in 201..299 -> "Igba ó lé "+ translateNumbersbetweenRounded(operatorOrNo)
             300 -> "ọ̀ọ́dúrún"
-            in 301..399 -> "ọ̀ọ́dúrún ó lé " + translateNumbersbetweenRounded(operatorOrNo, prefix)
+            in 301..399 -> "ọ̀ọ́dúrún ó lé " + translateNumbersbetweenRounded(operatorOrNo)
             400 -> "irinwó"
-            in 401..499 -> "irinwó ó lé " + translateNumbersbetweenRounded(operatorOrNo, prefix)
+            in 401..499 -> "irinwó ó lé " + translateNumbersbetweenRounded(operatorOrNo)
             500 -> "ẹ̀ẹ́dẹ́gbẹ̀ta"
-            in 501..599 ->  "ẹ̀ẹ́dẹ́gbẹ̀ta ó lé " + translateNumbersbetweenRounded(operatorOrNo, prefix)
+            in 501..599 ->  "ẹ̀ẹ́dẹ́gbẹ̀ta ó lé " + translateNumbersbetweenRounded(operatorOrNo)
             600 -> "ẹgbẹ̀ta"
-            in 601..699 -> "ẹgbẹ̀ta ó lé " + translateNumbersbetweenRounded(operatorOrNo, prefix)
+            in 601..699 -> "ẹgbẹ̀ta ó lé " + translateNumbersbetweenRounded(operatorOrNo)
             700 -> "ẹ̀ẹ́dẹ́gbẹ̀rin"
-            in 701..799 -> "ẹ̀ẹ́dẹ́gbẹ̀rin ó lé " + translateNumbersbetweenRounded(operatorOrNo, prefix)
+            in 701..799 -> "ẹ̀ẹ́dẹ́gbẹ̀rin ó lé " + translateNumbersbetweenRounded(operatorOrNo)
             800 -> "ẹgbẹ̀rin"
-            in 801..899 -> "ẹgbẹ̀rin ó lé " + translateNumbersbetweenRounded(operatorOrNo, prefix)
+            in 801..899 -> "ẹgbẹ̀rin ó lé " + translateNumbersbetweenRounded(operatorOrNo)
             900 -> "ẹ̀ẹ́dẹ́gbẹ̀rún"
-            in 901..999-> "ẹ̀ẹ́dẹ́gbẹ̀rún ó lé " + translateNumbersbetweenRounded(operatorOrNo, prefix)
+            in 901..999-> "ẹ̀ẹ́dẹ́gbẹ̀rún ó lé " + translateNumbersbetweenRounded(operatorOrNo)
             else-> "invalidNo"
         }
     }
-    private fun translate1000To1099(no: Int, prefix: String) : String{
-        val numToArray = no.toString().toCharArray()
-        return if (numToArray[2].toInt()==0) translateNumbersOneToNine(no)
-        else translateElevenToNinetyNine(no, prefix)
+    private fun translate1000To1099(no: Int) : String{
+        val numToArray = no.toString().map { it.toString().toInt() }.toIntArray()
+        return if (numToArray[2]==0) translateNumbersOneToNine(no)
+        else translateElevenToNinetyNine(no, getPrifixForTwoDigitNo(no))
     }
     private fun translateSomeComplexOnes(no: Int, prefix: String): String{
-        return  prefix + "lél"+ translateNumbersOneToNine(
-            "${no.toString().toCharArray()[1]}${no.toString().toCharArray()[1]}".toInt())
+        val lastNo = no.toString().map { it.toString().toInt() }.toIntArray()[2]
+        Log.d("lastNo", lastNo.toString())
+        return if (lastNo >5)
+            translateNumbersOneToNine(10-lastNo)+ "dín" + prefix
+        else
+            translateNumbersOneToNine(
+            lastNo) + "lél" + prefix
     }
     private fun getThelast3digitsOfA4digitNumber(no: Int): Int{
-        val numToArray = no.toString().toCharArray()
-        return "${numToArray[1]}${numToArray[2]}${numToArray[1]}}".toInt()
+        val numToArray = no.toString().map { it.toString().toInt() }.toIntArray()
+        return "${numToArray[1]}${numToArray[2]}${numToArray[1]}".toInt()
     }
     private fun getLastDigitOfA2DigitNo(no: Int) : Int{
-        val numToArray = no.toString().toCharArray()
-        return numToArray[2].toInt()
+        val numToArray = no.toString().map { it.toString().toInt() }.toIntArray()
+        return numToArray[2]
     }
     private fun getPrifixForTwoDigitNo(no: Int) : String{
-        val noToArray = no.toString().toCharArray()
-        return translateNumbersOneToNine(noToArray[0].toInt())
+        val noToArray = no.toString().map { it.toString().toInt() }.toIntArray()
+        return translateNumbersOneToNine(noToArray[0])
+    }
+    private fun translate4digitNos(no: Int, prefix: String) : String{
+        val splitedNo  = no.toString().map {
+            it.toString().toInt()
+        }.toIntArray()
+        return if (splitedNo[1] == 0 && splitedNo[2] == 0){
+            prefix + translateNumbersOneToNine(splitedNo[3])
+        } else if(splitedNo[1]==0 && splitedNo[2]!=0){
+            prefix + translate100to999("${splitedNo[1]}${splitedNo[2]}${splitedNo[3]}".toInt())
+        }else{
+            prefix + translateElevenToNinetyNine("${splitedNo[2]}${splitedNo[3]}".toInt(),
+                getPrifixForTwoDigitNo((splitedNo[2].toDouble() * Math.pow(10.0, Math.log10(splitedNo[3].toDouble()) + 1)
+                        + splitedNo[3]).toInt()))
+        }
+    }
+    fun translateAllNumbersToYoruba(no: Int): String{
+        return when(no){
+            in 1..9 -> translateNumbersOneToNine(no)
+            in 10..99 -> translateElevenToNinetyNine(no, getPrifixForTwoDigitNo(no))
+            in 100..2000 -> translate100to2000(no)
+            else -> "invalid number"
+        }
     }
 }
