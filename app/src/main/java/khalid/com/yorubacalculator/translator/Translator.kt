@@ -181,19 +181,19 @@ object Translator {
 
     private fun translate301to999(number:Int): String{
         return when (number){
-            in 301..399 -> trySomething(number, "ọdunrun", "irinwo")
+            in 301..399 -> doComplexNos(number, "ọdunrun", "irinwo")
             400 -> "irinwo"
-            in 401..499 -> trySomething(number, "irinwo", "ẹdẹgbẹta")
+            in 401..499 -> doComplexNos(number, "irinwo", "ẹdẹgbẹta")
             500 -> "ẹdẹgbẹta"
-            in 501..599 -> trySomething(number, "ẹdẹgbẹta", "ẹgbẹta")
+            in 501..599 -> doComplexNos(number, "ẹdẹgbẹta", "ẹgbẹta")
             600 -> "ẹgbẹta"
-            in 601..699 -> trySomething(number, "ẹgbẹta", "ẹdẹgbẹrin")
+            in 601..699 -> doComplexNos(number, "ẹgbẹta", "ẹdẹgbẹrin")
             700 -> "ẹdẹgbẹrin"
-            in 701..799 -> trySomething(number, "ẹdẹgbẹrin", "ẹgbẹrin")
+            in 701..799 -> doComplexNos(number, "ẹdẹgbẹrin", "ẹgbẹrin")
             800 -> "ẹgbẹrin"
-            in 801..899 -> trySomething(number, "ẹgbẹrin", "ẹdẹgbẹrun")
+            in 801..899 -> doComplexNos(number, "ẹgbẹrin", "ẹdẹgbẹrun")
             900 -> "ẹdẹgbẹrun"
-            in 901..999 -> trySomething(number, "ẹdẹgbẹrun", "ẹgbẹrun")
+            in 901..999 -> doComplexNos(number, "ẹdẹgbẹrun", "ẹgbẹrun")
             else -> "invalid number"
         }
     }
@@ -561,7 +561,7 @@ object Translator {
     }
 
 
-    private fun trySomething(number: Int, prefix: String, suffix: String): String{
+    private fun doComplexNos(number: Int, prefix: String, suffix: String): String{
         val numToArray = number.toString().map { it.toString().toInt() }.toIntArray()
         return when {
             numToArray[1] == 0 -> translate1to9(numToArray[2]) + "le"+prefix
