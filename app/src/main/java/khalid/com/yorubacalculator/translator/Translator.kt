@@ -4,29 +4,6 @@ package khalid.com.yorubacalculator.translator
  * Created by ${KhalidToak} on 4/6/2019.
  */
 object Translator {
-    fun translateoperator(o: String): String{
-        return when (o){
-            "+" -> "pẹlu"
-            "-" -> "o din"
-            "*" -> "o na"
-            "/" -> "o la"
-            "=" -> "o jẹ"
-            else -> "o sofo"
-        }
-    }
-    fun translate1to1000000(no: Int): String{
-        return when (no){
-            in 1..9 -> translate1to9(no)
-            in 10..99 -> translate10to99(no)
-            in 100..999 -> translate100to999(no)
-            in 1000..9999 -> translate1000to9999(no)
-            in 10000..99999 -> translate10000to99999(no)
-            in 100000..299999 -> "atiabo".translate100000to299999(no)
-            in 300000..1000000 -> translate300000to1000000(no)
-            else -> "invalid number"
-        }
-    }
-
     private fun translate1to9(number: Int): String {
         return when(number){
             1 -> "ọ̀kan"
@@ -41,9 +18,18 @@ object Translator {
             else -> "invalid number"
         }
     }
-
-
-
+    fun translate1to1000000(no: Int): String{
+        return when (no){
+            in 1..9 -> translate1to9(no)
+            in 10..99 -> translate10to99(no)
+            in 100..999 -> translate100to999(no)
+            in 1000..9999 -> translate1000to9999(no)
+            in 10000..99999 -> translate10000to99999(no)
+            in 100000..299999 -> "atiabo".translate100000to299999(no)
+            in 300000..1000000 -> translate300000to1000000(no)
+            else -> "invalid number"
+        }
+    }
 
     private fun translate11to19(number: Int, prefix: String, suffix: String, after: String): String{
         return when(number){
@@ -348,7 +334,6 @@ object Translator {
         }
     }
 
-
     private fun translate4000to19999(no: Int): String{
         return when(no){
             4000,6000,8000,10000,12000,14000,16000,18000 -> eventhousands(no)
@@ -429,7 +414,7 @@ object Translator {
     private fun translate1to19(no: Int): String{
         return when (no){
             in 0..9 -> translate1to9(no)
-             10 -> translateTens(10)
+            10 -> translateTens(10)
             else -> translate11to19(no, translate1to9(no-10), translateTens(20), translate1to9(20-no))
         }
     }
@@ -600,15 +585,20 @@ object Translator {
             else -> "invalid number"
         }
     }
-
-
-
-
-
     //get last no for a 2 digits value
-    // For example, if no is 23, this will return 3
     private fun getLastDigitOf2DigitNo(no: Int): Int{
         val numToArray = no.toString().map { it.toString().toInt() }.toIntArray()
         return numToArray[1]
     }
+    fun translateoperator(o: String): String{
+        return when (o){
+            "+" -> "pẹlu"
+            "-" -> "o din"
+            "*" -> "lọna"
+            "/" -> "o la"
+            "=" -> "o jẹ"
+            else -> "o sofo"
+        }
+    }
+
 }
